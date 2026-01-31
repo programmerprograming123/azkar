@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اذكار</title>
+    <style>
+        body {
+            background-color: rgb(143, 199, 88);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 30px;
+            padding: 0;
+        }
+        
+        #headerDiv {
+            background-color: rgb(34, 146, 67);
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            margin: 10px;
+            border: 1px solid black;
+        }
+        
+        #headerDiv h1 {
+            color: white;
+        }
+        /* Grid Container */
+        
+        #photosAndButtons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            justify-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        /* General style for each card */
+        
+        #photosAndButtons>div {
+            background-color: rgb(80, 114, 47);
+            width: 220px;
+            height: 275px;
+            border-radius: 13px;
+            border: 1px solid black;
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        #photosAndButtons>div:hover {
+            transform: scale(1.03);
+        }
+        
+        #photosAndButtons img {
+            width: 200px;
+            height: 150px;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+        
+        #photosAndButtons button {
+            background-color: rgb(97, 138, 57);
+            border: none;
+            border-radius: 12px;
+            width: 90%;
+            height: 60px;
+            margin-top: 10px;
+            font-size: larger;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        #photosAndButtons button:hover {
+            background-color: rgb(110, 158, 65);
+        }
+        
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="headerDiv">
+        <header>
+            <h1 id="HeadH1">اذكار</h1>
+        </header>
+    </div>
+
+    <div id="photosAndButtons">
+        <div id="div1">
+            <img src="pics/R.jpeg" alt="Zikr1">
+            <a href="allZikrs/zikr1.html"><button>أذكار الصباح</button></a>
+        </div>
+
+        <div id="div2">
+            <img src="pics/OIP.webp" alt="Zikr2">
+            <a href="allZikrs/zikr2.html"><button>أذكار قبل النوم</button></a>
+        </div>
+
+        <div id="div3">
+            <img src="pics/7bedbda64a97b250938f76a3e3a62b4c.jpg" alt="Zikr3">
+            <a href="allZikrs/zikr3.html"><button>أذكار المساء</button></a>
+        </div>
+
+        <div id="div4">
+            <img src="pics/OIP (1).webp" alt="Zikr4">
+            <a href="allZikrs/zikr4.html"><button>أذكار بعد الصلاة</button></a>
+        </div>
+
+
+        <div id="div5">
+            <img src="pics/95-3.1800x1800.png" alt="Zikr5">
+            <a href="allZikrs/zikr5.html"><button>أذكار دخول وخروج المنزل</button></button></a>
+        </div>
+
+        <div id="div6">
+            <img src="pics/OIP (2).webp" alt="Zikr6">
+            <a href="allZikrs/zikr6.html"><button>أدعية السفر</button></button></a>
+        </div>
+
+        <div id="div7">
+            <img src="pics/peaceful-muslim-prayer-sunlit-mosque-muslim-doing-pray-namaz-masjid_1311447-1638.avif" alt="Zikr7">
+            <a href="allZikrs/zikr7.html"><button>أدعية السفر</button></button></a>
+        </div>
+
+    </div>
+
+
+
+
+    </div>
+</body>
+
+</html>
