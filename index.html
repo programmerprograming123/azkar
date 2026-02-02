@@ -78,10 +78,19 @@
         a {
             text-decoration: none;
         }
+        
+        #times {
+            background-color: rgb(97, 138, 57);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            transition: background-color 0.3s;
+        }
     </style>
 </head>
 
 <body>
+
     <div id="headerDiv">
         <header>
             <h1 id="HeadH1">اذكار</h1>
@@ -89,48 +98,115 @@
     </div>
 
     <div id="photosAndButtons">
-        <div id="div1">
-            <img src="pics/R.jpeg" alt="Zikr1">
+        <div>
+            <img src="pics/R.jpeg">
             <a href="allZikrs/zikr1.html"><button>أذكار الصباح</button></a>
         </div>
 
-        <div id="div2">
-            <img src="pics/OIP.webp" alt="Zikr2">
+        <div>
+            <img src="pics/OIP.webp">
             <a href="allZikrs/zikr2.html"><button>أذكار قبل النوم</button></a>
         </div>
 
-        <div id="div3">
-            <img src="pics/7bedbda64a97b250938f76a3e3a62b4c.jpg" alt="Zikr3">
+        <div>
+            <img src="pics/7bedbda64a97b250938f76a3e3a62b4c.jpg">
             <a href="allZikrs/zikr3.html"><button>أذكار المساء</button></a>
         </div>
 
-        <div id="div4">
-            <img src="pics/OIP (1).webp" alt="Zikr4">
+        <div>
+            <img src="pics/OIP (1).webp">
             <a href="allZikrs/zikr4.html"><button>أذكار بعد الصلاة</button></a>
         </div>
 
-
-        <div id="div5">
-            <img src="pics/95-3.1800x1800.png" alt="Zikr5">
-            <a href="allZikrs/zikr5.html"><button>أذكار دخول وخروج المنزل</button></button></a>
+        <div>
+            <img src="pics/95-3.1800x1800.png">
+            <a href="allZikrs/zikr5.html"><button>أذكار دخول وخروج المنزل</button></a>
         </div>
 
-        <div id="div6">
-            <img src="pics/OIP (2).webp" alt="Zikr6">
-            <a href="allZikrs/zikr6.html"><button>أدعية السفر</button></button></a>
+        <div>
+            <img src="pics/OIP (2).webp">
+            <a href="allZikrs/zikr6.html"><button>أدعية السفر</button></a>
         </div>
-
-        <div id="div7">
-            <img src="pics/peaceful-muslim-prayer-sunlit-mosque-muslim-doing-pray-namaz-masjid_1311447-1638.avif" alt="Zikr7">
-            <a href="allZikrs/zikr7.html"><button>أدعية السفر</button></button></a>
-        </div>
-
     </div>
 
+    <hr>
 
+    <!-- Prayer Times -->
+
+    <div id="prayerTimes" style="max-width:400px;margin:20px auto;padding:20px;background: rgb(80, 114, 47);border-radius:12px;color:white;font-family:Verdana, Geneva, Tahoma,sans-serif;text-align:center;">
+        <h2 style="margin-bottom:15px;font-size:1.5em;">مواقيت الصلاة</h2>
+        <div id="times">
+            <ul style="list-style:none;padding:0;margin:0;font-size:1.2em;line-height:2;">
+                <li>الفجر: <span id="fajr">...</span></li>
+                <li>الظهر: <span id="dhuhr">...</span></li>
+                <li>العصر: <span id="asr">...</span></li>
+                <li>المغرب: <span id="maghrib">...</span></li>
+                <li>العشاء: <span id="isha">...</span></li>
+            </ul>
+        </div>
 
 
     </div>
+    <script>
+        function to12Hour(time24) {
+            const [h, m] = time24.split(":").map(Number);
+            const ampm = h >= 12 ? "PM" : "AM";
+            const hour12 = h % 12 || 12;
+            return `${hour12}:${m.toString().padStart(2,"0")} ${ampm}`;
+        }
+
+        // Display timings in HTML
+        function showTimes(t) {
+            document.getElementById("fajr").textContent = to12Hour(t.Fajr);
+            document.getElementById("dhuhr").textContent = to12Hour(t.Dhuhr);
+            document.getElementById("asr").textContent = to12Hour(t.Asr);
+            document.getElementById("maghrib").textContent = to12Hour(t.Maghrib);
+            document.getElementById("isha").textContent = to12Hour(t.Isha);
+        }
+
+        // Fetch prayer times using coordinates
+        async function fetchByCoords(lat, lon) {
+            const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=3&latitudeAdjustmentMethod=3`);
+            const data = await res.json();
+            return data.data.timings;
+        }
+
+        // Fetch prayer times using city (fallback)
+        async function fetchByCity() {
+            const res = await fetch("https://api.aladhan.com/v1/timingsByCity?city=London&country=UK&method=3");
+            const data = await res.json();
+            return data.data.timings;
+        }
+
+        // Main function: get location + fetch
+        function getPrayerTimes() {
+            if (!navigator.geolocation) {
+                fetchByCity().then(showTimes);
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    fetchByCoords(pos.coords.latitude, pos.coords.longitude)
+                        .then(showTimes)
+                        .catch(() => fetchByCity().then(showTimes));
+                },
+                () => {
+                    // Location denied
+                    fetchByCity().then(showTimes);
+                }
+            );
+        }
+
+        // Run on page load
+        getPrayerTimes();
+    </script>
+
+
+
+
+
 </body>
+
 
 </html>
